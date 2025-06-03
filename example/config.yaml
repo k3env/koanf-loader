@@ -1,0 +1,5 @@
+name: "test"
+nested:
+  foo: 42
+  bar: true
+  baz: 10s
