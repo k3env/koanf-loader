@@ -29,7 +29,7 @@ func (cfg AMQPConfig) Uri() string {
 	uri := url.URL{
 		Scheme: "amqp",
 		User:   user,
-		Host:   fmt.Sprintf("%s:%d", vhost, port),
+		Host:   fmt.Sprintf("%s:%d", cfg.Host, port),
 		Path:   cfg.Vhost,
 	}
 	return uri.String()
