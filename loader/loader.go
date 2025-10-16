@@ -49,7 +49,7 @@ func Load(out interface{}, envPrefix string) error {
 		}
 	}
 
-	err = realLoader.Load(env.Provider("APP", "_", envparser(envPrefix)), nil)
+	err = realLoader.Load(env.Provider(envPrefix, "_", envparser(envPrefix)), nil)
 	if err != nil {
 		return err
 	}
