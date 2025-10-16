@@ -82,7 +82,6 @@ func selectParser(ext string) (koanf.Parser, error) {
 func envparser(prefix string) func(s string) string {
 	return func(s string) string {
 		realPrefix := fmt.Sprintf("%s_", strings.ToUpper(prefix))
-		return strings.Replace(strings.ToLower(
-			strings.TrimPrefix(s, realPrefix)), "_", ".", -1)
+		return strings.ToLower(strings.TrimPrefix(s, realPrefix))
 	}
 }
