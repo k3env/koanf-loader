@@ -16,7 +16,7 @@ import (
 	"github.com/knadh/koanf/providers/file"
 )
 
-func Load(out interface{}) error {
+func Load(out interface{}, envPrefix string) error {
 	var err error
 	var pc struct {
 		Config ConfigLoader `koanf:"config"`
@@ -49,7 +49,7 @@ func Load(out interface{}) error {
 		}
 	}
 
-	err = realLoader.Load(env.Provider("APP", "_", envparser), nil)
+	err = realLoader.Load(env.Provider("APP", "_", envparser(envPrefix)), nil)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,10 @@ func selectParser(ext string) (koanf.Parser, error) {
 	}
 }
 
-func envparser(s string) string {
-	return strings.Replace(strings.ToLower(
-		strings.TrimPrefix(s, "TEST_")), "_", ".", -1)
+func envparser(prefix string) func(s string) string {
+	return func(s string) string {
+		realPrefix := fmt.Sprintf("%s_", strings.ToUpper(prefix))
+		return strings.Replace(strings.ToLower(
+			strings.TrimPrefix(s, realPrefix)), "_", ".", -1)
+	}
 }
